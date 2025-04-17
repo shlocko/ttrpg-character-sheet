@@ -35,6 +35,7 @@ const DEFAULT_STATE = {
 		perception: DEFAULT_STAT_LEVEL
 	},
 	bleeding: false,
+	bleedingStacks: 0,
 	gapingWound: false,
 	shieldbroken: false,
 	shaken: false,
@@ -257,7 +258,16 @@ export const App = () => {
 				</span>
 				<div class="flex flex-col">
 					<span class="text-xl">Statuses:</span>
-					<label><input type="checkbox" checked={store.bleeding} onChange={e => setStore("bleeding", e.target.checked)} /> Bleeding</label>
+					<label><input type="checkbox" checked={store.bleeding} onChange={e => setStore("bleeding", e.target.checked)} /> Bleeding
+
+						<Button onClick={() => setStore("bleedingStacks", store.bleedingStacks - 1)}>
+							-
+						</Button>
+						<strong>{store.bleedingStacks}</strong>
+						<Button onClick={() => setStore("bleedingStacks", store.bleedingStacks + 1)}>
+							+
+						</Button>
+					</label>
 					<label><input type="checkbox" checked={store.gapingWound} onChange={e => setStore("gapingWound", e.target.checked)} /> Gaping Wound</label>
 					<label><input type="checkbox" checked={store.shaken} onChange={e => setStore("shaken", e.target.checked)} /> Shaken </label>
 					<label><input type="checkbox" checked={store.shieldbroken} onChange={e => setStore("shieldbroken", e.target.checked)} /> Shieldbroken</label>
