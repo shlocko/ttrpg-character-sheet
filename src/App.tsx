@@ -35,6 +35,9 @@ const DEFAULT_STATE = {
 		perception: DEFAULT_STAT_LEVEL
 	},
 	bleeding: false,
+	gapingWound: false,
+	shieldbroken: false,
+	shaken: false,
 	armor: "UNARMORED" as "UNARMORED" | "LIGHT" | "MEDIUM" | "HEAVY",
 	health: 50,
 	maxHealth: 50,
@@ -255,6 +258,9 @@ export const App = () => {
 				<div class="flex flex-col">
 					<span class="text-xl">Statuses:</span>
 					<label><input type="checkbox" checked={store.bleeding} onChange={e => setStore("bleeding", e.target.checked)} /> Bleeding</label>
+					<label><input type="checkbox" checked={store.gapingWound} onChange={e => setStore("gapingWound", e.target.checked)} /> Gaping Wound</label>
+					<label><input type="checkbox" checked={store.shaken} onChange={e => setStore("shaken", e.target.checked)} /> Shaken </label>
+					<label><input type="checkbox" checked={store.shieldbroken} onChange={e => setStore("shieldbroken", e.target.checked)} /> Shieldbroken</label>
 				</div>
 			</div>
 			<div class="flex flex-col">
