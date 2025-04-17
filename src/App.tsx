@@ -1,5 +1,5 @@
-import {createEffect, createSignal, For, JSX, Show} from 'solid-js';
-import {createStore} from 'solid-js/store';
+import { createEffect, createSignal, For, JSX, Show } from 'solid-js';
+import { createStore } from 'solid-js/store';
 
 const matchesAny = (string: string, ...matchesAnyOf: string[]) => matchesAnyOf.includes(string);
 
@@ -52,7 +52,7 @@ export const App = () => {
 		localStorage.setItem('store', JSON.stringify(store));
 	});
 
-	const attackDice = () => {
+	const attackDiceStr = () => {
 		if (store.stats.strength <= 4) {
 			return 1;
 		} else if (store.stats.strength <= 9) {
@@ -66,6 +66,26 @@ export const App = () => {
 		} else if (store.stats.strength <= 41) {
 			return 6;
 		} else if (store.stats.strength <= 49) {
+			return 7;
+		} else {
+			return 8;
+		}
+	};
+
+	const attackDiceDex = () => {
+		if (store.stats.dexterity <= 4) {
+			return 1;
+		} else if (store.stats.dexterity <= 9) {
+			return 2;
+		} else if (store.stats.dexterity <= 16) {
+			return 3;
+		} else if (store.stats.dexterity <= 24) {
+			return 4;
+		} else if (store.stats.dexterity <= 33) {
+			return 5;
+		} else if (store.stats.dexterity <= 41) {
+			return 6;
+		} else if (store.stats.dexterity <= 49) {
 			return 7;
 		} else {
 			return 8;
@@ -187,28 +207,28 @@ export const App = () => {
 					<span class="self-center">Speed</span>
 					<div class="flex flex-row justify-between w-full">
 						<Show when={editing()} fallback={<div></div>}>
-							<Button onClick={() => setStore("stats", {speed: store.stats.speed - 1})}>-</Button>
+							<Button onClick={() => setStore("stats", { speed: store.stats.speed - 1 })}>-</Button>
 						</Show>
 						<span class="self-center text-3xl">{store.stats.speed + (editing() ? 0 : speedBonus())} <Show when={!editing()}><span class="text-xl">({store.stats.speed}{speedBonus() >= 0 ? `+${speedBonus()}` : speedBonus()})</span></Show></span>
 						<Show when={editing()} fallback={<div></div>}>
-							<Button onClick={() => setStore("stats", {speed: store.stats.speed + 1})}>+</Button>
+							<Button onClick={() => setStore("stats", { speed: store.stats.speed + 1 })}>+</Button>
 						</Show>
 					</div>
 				</div>
 				<StatButton
 					name="Strength"
 					value={store.stats.strength}
-					setValue={(newValue: number) => setStore('stats', {strength: newValue})}
+					setValue={(newValue: number) => setStore('stats', { strength: newValue })}
 				/>
 				<StatButton
 					name="Dexterity"
 					value={store.stats.dexterity}
-					setValue={(newValue: number) => setStore('stats', {dexterity: newValue})}
+					setValue={(newValue: number) => setStore('stats', { dexterity: newValue })}
 				/>
 				<StatButton
 					name="Willpower"
 					value={store.stats.willpower}
-					setValue={(newValue: number) => setStore('stats', {willpower: newValue})}
+					setValue={(newValue: number) => setStore('stats', { willpower: newValue })}
 				/>
 				<StatButton
 					name="Perception"
@@ -234,11 +254,12 @@ export const App = () => {
 				</span>
 				<div class="flex flex-col">
 					<span class="text-xl">Statuses:</span>
-					<label><input type="checkbox" checked={store.bleeding} onChange={e => setStore("bleeding", e.target.checked)}/> Bleeding</label>
+					<label><input type="checkbox" checked={store.bleeding} onChange={e => setStore("bleeding", e.target.checked)} /> Bleeding</label>
 				</div>
 			</div>
 			<div class="flex flex-col">
-				<span class="text-xl">Attack dice: <strong>{attackDice()} {diceSize()}</strong></span>
+				<span class="text-xl">Str Attack pool: <strong>{attackDiceStr()} {diceSize()}</strong></span>
+				<span class="text-xl">Dex Attack pool: <strong>{attackDiceDex()} {diceSize()}</strong></span>
 				<span class="text-xl">Parry pool: <strong>{parryDice()} {diceSize()}</strong></span>
 				<span class="text-xl">Defense: <strong>{defense() + defenseBonus()}</strong> ({defense()}, {defenseBonus() >= 0 ? `+${defenseBonus()}` : defenseBonus()} from armor)</span>
 			</div>
